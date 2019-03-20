@@ -1,44 +1,48 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import classNames from 'classnames'
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import AppBar from '@material-ui/core/AppBar';
+import { withStyles } from '@material-ui/core/styles';
 
-class SearchForm extends React.Component {
-
-  filterValueChanged = (e) => {
-    return this.props.filterValueChanged(e.target.value)
+const styles = {
+  appBar: {
+    backgroundColor: '#c2b4ff',
+    padding: 20,
+    marginTop: 30,
+    borderRadius: 10
   }
+}
 
-  stockOnlyValueChanged = () => {
-    return this.props.stockOnlyValueChanged()
-  }
+function SearchBar (props) {
+  const { classes } = props;
 
-  render () {
-    return (
-      <div>
-        <form>
-          <input
-            value={this.props.filterText}
-            type="text"
-            placeholder="Search Text"
-            onChange={this.filterValueChanged}
+  return (
+    <AppBar position="static" className={classes.appBar}>
+      <form noValidate autoComplete="off">
+        <TextField
+          onChange={props.onFilterTextChange}
+          id="search-input"
+          label="Search Text"
+          margin="normal"
+          fullWidth
           />
-          <br />
-          <input
-            checked={this.props.isStockOnly}
-            type="checkbox"
-            onChange={this.stockOnlyValueChanged}
-          />Only show products in stock
-        </form>
-      </div>
-    )
-
-  }
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={props.inStockOnly}
+              onChange={props.onInStockChange}
+              value="in_stock"
+              color="primary"
+            />
+          }
+          label="Only show products in stock"
+        />
+      </form>
+    </AppBar>
+  )
 }
 
-SearchForm.propTypes = {
-  filterText: PropTypes.string.isRequired,
-  isStockOnly: PropTypes.bool.isRequired,
-  filterValueChanged: PropTypes.func.isRequired,
-  stockOnlyValueChanged: PropTypes.func.isRequired
-}
-
-export default SearchForm
+export default withStyles(styles)(SearchBar);

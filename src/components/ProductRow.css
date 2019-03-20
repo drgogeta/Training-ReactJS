@@ -1,0 +1,8 @@
+:local(.name) {
+  padding: 5px;
+  border: 2px dashed purple;
+}
+:local(.price) {
+  padding: 5px;
+  border: 2px dashed white;
+}
