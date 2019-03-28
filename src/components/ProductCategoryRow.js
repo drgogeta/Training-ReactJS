@@ -12,10 +12,12 @@ const StyledTableCell = styled(TableCell)`
 `
 
 function ProductCategoryRow (props) {
+  const category = props.category;
+
   return (
     <TableRow>
-      <StyledTableCell component="td" scope="row" colSpan="2">
-        {props.category}
+      <StyledTableCell component="td" scope="row" colSpan="3">
+        {category}
       </StyledTableCell>
     </TableRow>
   );

@@ -1,31 +1,38 @@
-import React, { Component } from 'react';
+import React from 'react';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
-import { withStyles } from '@material-ui/core/styles';
 import styled from 'styled-components'
-import styles from './ProductRow.css';
+import Checkbox from '@material-ui/core/Checkbox'
 
 const StyledSpan = styled.span`
   color: red;
 `
 
+const CheckboxTableCell = styled(TableCell)`
+  width: 20px !important;
+` 
 class ProductRow extends React.Component {
   render() {
-    const product = this.props.product;
+    const { product, selected, onSelect, onUnSelect } = this.props
     const name = product.stocked ?
       product.name :
-      <StyledSpan>
+      <StyledSpan >
         {product.name}
       </StyledSpan>;
 
     return (
       <TableRow>
+        <CheckboxTableCell padding="checkbox">
+          <Checkbox
+            checked={selected}
+            color="primary"
+            disabled={!product.stocked}
+            onChange={() => selected ? onUnSelect(product) : onSelect(product)} />
+        </CheckboxTableCell>
         <TableCell component="td" scope="row">
-          <div className={styles.name}>{name}</div>
+          {name}
         </TableCell>
-        <TableCell numeric>
-          <div className={styles.price}>{product.price}</div>
-        </TableCell>
+        <TableCell numeric>{product.price}</TableCell>
       </TableRow>
     );
   }
